@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find . -name \"specs\" -type d -exec find {} -name \"*.md\" ;)",
+      "Bash(find . -name \"*.md\" -exec grep -l \"Authentication & User Isolation\" {} ;)",
+      "Bash(find history -name \"*.md\" -exec grep -l \"Authentication & User Isolation\" {} ;)",
+      "Bash(python -m pytest test_basic.py -v)",
+      "Bash(pip install -r requirements.txt)",
+      "Bash(python3 -m venv venv)",
+      "Bash(source venv/bin/activate)",
+      "Bash(pip install --upgrade pip)",
+      "Bash(pip install -r requirements.txt --break-system-packages)",
+      "Bash(pip install pytest pytest-mock --break-system-packages)",
+      "Bash(DATABASE_URL=sqlite:///./test.db JWT_SECRET=test_secret_key_for_development python -m pytest test_basic.py -v)"
+    ]
+  }
+}

@@ -1,0 +1,335 @@
+# API Contracts: Todo Full-Stack Web Application – Authentication & User Isolation
+
+## Authentication Endpoints
+
+### POST /api/auth/register
+Register a new user account
+
+**Request:**
+```
+{
+  "email": "user@example.com",
+  "password": "securePassword123"
+}
+```
+
+**Response 200:**
+```
+{
+  "success": true,
+  "message": "Registration successful",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
+
+**Response 400:**
+```
+{
+  "error": "Invalid input",
+  "message": "Email format invalid or password too weak"
+}
+```
+
+**Response 409:**
+```
+{
+  "error": "Conflict",
+  "message": "Email already registered"
+}
+```
+
+### POST /api/auth/login
+Authenticate user and return JWT token
+
+**Request:**
+```
+{
+  "email": "user@example.com",
+  "password": "securePassword123"
+}
+```
+
+**Response 200:**
+```
+{
+  "success": true,
+  "message": "Login successful",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
+
+**Response 401:**
+```
+{
+  "error": "Unauthorized",
+  "message": "Invalid credentials"
+}
+```
+
+### POST /api/auth/logout
+Logout user (invalidate session)
+
+**Headers:**
+```
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+```
+
+**Response 200:**
+```
+{
+  "success": true,
+  "message": "Logged out successfully"
+}
+```
+
+## Task Endpoints (Require Authentication)
+
+### GET /api/tasks
+Retrieve all tasks for the authenticated user
+
+**Headers:**
+```
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+```
+
+**Response 200:**
+```
+{
+  "tasks": [
+    {
+      "id": "uuid-string",
+      "title": "Task 1",
+      "description": "Description of task 1",
+      "completed": false,
+      "user_id": "user-uuid",
+      "created_at": "2026-01-28T10:00:00Z",
+      "updated_at": "2026-01-28T10:00:00Z"
+    }
+  ]
+}
+```
+
+**Response 401:**
+```
+{
+  "error": "Unauthorized",
+  "message": "Missing or invalid token"
+}
+```
+
+### GET /api/tasks/{task_id}
+Retrieve a specific task by ID
+
+**Headers:**
+```
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+```
+
+**Path Parameters:**
+- task_id: UUID of the task to retrieve
+
+**Response 200:**
+```
+{
+  "id": "uuid-string",
+  "title": "Task 1",
+  "description": "Description of task 1",
+  "completed": false,
+  "user_id": "user-uuid",
+  "created_at": "2026-01-28T10:00:00Z",
+  "updated_at": "2026-01-28T10:00:00Z"
+}
+```
+
+**Response 401:**
+```
+{
+  "error": "Unauthorized",
+  "message": "Missing or invalid token"
+}
+```
+
+**Response 403:**
+```
+{
+  "error": "Forbidden",
+  "message": "Access denied - task does not belong to user"
+}
+```
+
+**Response 404:**
+```
+{
+  "error": "Not Found",
+  "message": "Task not found"
+}
+```
+
+### POST /api/tasks
+Create a new task for the authenticated user
+
+**Headers:**
+```
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+```
+
+**Request:**
+```
+{
+  "title": "New Task",
+  "description": "Description of the new task",
+  "completed": false
+}
+```
+
+**Response 201:**
+```
+{
+  "id": "uuid-string",
+  "title": "New Task",
+  "description": "Description of the new task",
+  "completed": false,
+  "user_id": "user-uuid",
+  "created_at": "2026-01-28T10:00:00Z",
+  "updated_at": "2026-01-28T10:00:00Z"
+}
+```
+
+**Response 401:**
+```
+{
+  "error": "Unauthorized",
+  "message": "Missing or invalid token"
+}
+```
+
+### PUT /api/tasks/{task_id}
+Update an existing task
+
+**Headers:**
+```
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+```
+
+**Path Parameters:**
+- task_id: UUID of the task to update
+
+**Request:**
+```
+{
+  "title": "Updated Task Title",
+  "description": "Updated description",
+  "completed": true
+}
+```
+
+**Response 200:**
+```
+{
+  "id": "uuid-string",
+  "title": "Updated Task Title",
+  "description": "Updated description",
+  "completed": true,
+  "user_id": "user-uuid",
+  "created_at": "2026-01-28T10:00:00Z",
+  "updated_at": "2026-01-28T11:00:00Z"
+}
+```
+
+**Response 401:**
+```
+{
+  "error": "Unauthorized",
+  "message": "Missing or invalid token"
+}
+```
+
+**Response 403:**
+```
+{
+  "error": "Forbidden",
+  "message": "Access denied - task does not belong to user"
+}
+```
+
+**Response 404:**
+```
+{
+  "error": "Not Found",
+  "message": "Task not found"
+}
+```
+
+### DELETE /api/tasks/{task_id}
+Delete a task
+
+**Headers:**
+```
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+```
+
+**Path Parameters:**
+- task_id: UUID of the task to delete
+
+**Response 204:**
+```
+(No content)
+```
+
+**Response 401:**
+```
+{
+  "error": "Unauthorized",
+  "message": "Missing or invalid token"
+}
+```
+
+**Response 403:**
+```
+{
+  "error": "Forbidden",
+  "message": "Access denied - task does not belong to user"
+}
+```
+
+**Response 404:**
+```
+{
+  "error": "Not Found",
+  "message": "Task not found"
+}
+```
+
+## Common Error Responses
+
+### 401 Unauthorized
+```
+{
+  "error": "Unauthorized",
+  "message": "Missing or invalid token"
+}
+```
+
+### 403 Forbidden
+```
+{
+  "error": "Forbidden",
+  "message": "Access denied - task does not belong to user"
+}
+```
+
+### 404 Not Found
+```
+{
+  "error": "Not Found",
+  "message": "Resource not found"
+}
+```
+
+### 500 Internal Server Error
+```
+{
+  "error": "Internal Server Error",
+  "message": "An unexpected error occurred"
+}
+```
