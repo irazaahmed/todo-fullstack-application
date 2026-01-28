@@ -1,55 +1,54 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!-- SYNC IMPACT REPORT
+Version change: N/A -> 1.0.0
+Modified principles: None (new constitution)
+Added sections: All principles and sections from user input
+Removed sections: None (completely new content)
+Templates requiring updates:
+- ✅ .specify/templates/plan-template.md - Updated to align with new principles
+- ✅ .specify/templates/spec-template.md - Updated to align with new principles
+- ✅ .specify/templates/tasks-template.md - Updated to align with new principles
+- ✅ .specify/templates/commands/*.md - Reviewed for consistency
+- ✅ README.md - Updated references to new principles
+Follow-up TODOs: None
+-->
+# Todo Full-Stack Web Application (Hackathon Phase II) Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### Spec-Driven Development as the Single Source of Truth
+Spec-Driven Development as the single source of truth. No manual coding; all implementation must flow from approved specs. All architecture decisions must originate from the Plan. All features must map back to written requirements and acceptance criteria.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### Clear Separation of Concerns
+Maintain clear separation of concerns (frontend, backend, authentication, database). Frontend and backend must remain decoupled and communicate only via APIs. Security by default with strict user isolation.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### Deterministic Reproducible Builds
+Deterministic, reproducible builds through explicit specifications. Cloud-ready architecture even when running locally. Environment configuration must rely on environment variables, not hardcoded values.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### REST API Statelessness
+REST APIs must be stateless, predictable, and documented. Every API request must be authorized and scoped to the authenticated user. Backend must never trust client-provided user identifiers without JWT verification.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### Authentication with Better Auth
+Authentication must use Better Auth with JWT-based verification. All API endpoints require a valid JWT token. Requests without valid authentication must return 401 Unauthorized.
 
-### [PRINCIPLE_6_NAME]
+### Data Isolation and Security
+Task ownership must be enforced at the database query level. No cross-user data access is allowed under any condition. JWT secret must be shared via environment variables only.
 
+### Monorepo Architecture
+Monorepo structure is mandatory. Frontend: Next.js 16+ using App Router. Backend: Python FastAPI. ORM: SQLModel only. Database: Neon Serverless PostgreSQL. Authentication: Better Auth issuing JWT tokens. No alternative frameworks, ORMs, or databases are permitted.
 
-[PRINCIPLE__DESCRIPTION]
+## Architecture Constraints
+No feature may exceed Basic Level scope in Phase II. Intermediate or Advanced features must not be introduced. No speculative improvements or "future ready" fields are allowed. All changes must remain within Phase II boundaries. If requirements are unclear or missing, the agent must stop and request clarification.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## Development Workflow
+The only allowed workflow is: Specify → Plan → Tasks → Implement. No code may be generated without an explicit Task reference. All architecture decisions must originate from the Plan. All features must map back to written requirements and acceptance criteria.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+## Data and Persistence Rules
+Tasks must be persistently stored in PostgreSQL. Each task must be associated with exactly one user. Database schema changes require specification updates. No implicit fields or undocumented columns are allowed.
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
-
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+## Quality Standards
+Code generated must be readable, structured, and idiomatic. API behavior must match documented specifications exactly. Frontend UI must be responsive and usable on desktop and mobile. Error handling must be explicit and user-safe. System behavior must be predictable and testable.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+This constitution establishes the foundational principles for the Todo Full-Stack Web Application project. All development activities must comply with these principles. Any deviation from these principles must be explicitly documented and approved. The workflow of Specify → Plan → Tasks → Implement must be strictly followed. No manual coding outside of spec-authorized output is permitted. All changes must be traceable back to a specification.
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
-
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2026-01-28 | **Last Amended**: 2026-01-28
