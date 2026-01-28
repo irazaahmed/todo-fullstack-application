@@ -208,3 +208,11 @@ Wait for consent; never auto-create ADRs. Group related decisions (stacks, authe
 
 ## Code Standards
 See `.specify/memory/constitution.md` for code quality, testing, performance, security, and architecture principles.
+
+## Active Technologies
+- Python 3.11 (Backend), JavaScript/TypeScript (Frontend Next.js 16+) + Better Auth (frontend authentication), FastAPI (backend framework), SQLModel (ORM), PostgreSQL (database) (001-auth-isolation)
+- Neon Serverless PostgreSQL database (001-auth-isolation)
+- GitHub MCP Server Integration for enhanced GitHub operations
+
+## Recent Changes
+- 001-auth-isolation: Added Python 3.11 (Backend), JavaScript/TypeScript (Frontend Next.js 16+) + Better Auth (frontend authentication), FastAPI (backend framework), SQLModel (ORM), PostgreSQL (database)
